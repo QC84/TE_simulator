@@ -1,0 +1,60 @@
+library(optparse)
+
+# Create option list
+option_list <- list(
+  make_option(c("--tweak"), action="store_true", default=FALSE,
+              help="Enable parameter tweaking")
+)
+
+# Parse options
+opt <- parse_args(OptionParser(option_list=option_list))
+
+# LOCAL FUNCTIONS ---------------------------------------------------------
+cli::cli_h2("FUNCTIONS")
+r_files <- list.files(path = "./R",
+                      pattern = "*.R",
+                      full.names = TRUE)
+for (file in r_files) {
+  cat(paste0("Sourcing: ", basename(file), "\n"))
+  source(file)
+}
+cat("\n")
+
+# PARAMETERS --------------------------------------------------------------
+cli::cli_h2("PARAMETERS")
+## Load -------------------------------------------------------------------
+cat("------Load------\n\n")
+source("./CONFIG/default.R")
+# Print object name & key values
+cat("Retreiving parameters from ./CONFIG/default.R\n\n")
+## Tweak ------------------------------------------------------------------
+if(opt$tweak){
+  cat("------Tweak------\n\n")
+  custom_r_mig <- seq(from = params$events$r_mig,
+                      to   = params$events$r_mig + 0.02,
+                      length.out = 3)
+  custom_r_kill <- seq(from = params$events$r_kill - 0.0002,
+                       to   = params$events$r_kill + 0.0002,
+                       length.out = 3)
+  params_grid <- tweak(params,
+                       r_mig = custom_r_mig,
+                       r_kil = custom_r_kill)
+  cat("r_mig will varie from", range(custom_r_mig)[1], "to", range(custom_r_mig)[2], "\n")
+  cat("r_kill will varie from", range(custom_r_kill)[1], "to", range(custom_r_kill)[2], "\n")
+  cat("Total:", length(custom_r_mig), "(r_mig) x", length(custom_r_kill), "(r_kill) x", params$other$n_rep, "(replicates)\n\n") 
+}
+## Validate ---------------------------------------------------------------
+cat("------Validate------\n\n")
+validity <- FALSE
+validity <- params_grid |> validate()
+
+# Parallel run
+cli::cli_h2("SIMULATIONS")
+batch_results_par <- run_batch_par(validity,
+                                   params,
+                                   params_grid,
+                                   n_cores = min(parallel::detectCores() - 1, params$other$n_rep))
+current_time <- Sys.time()
+saveRDS(object = batch_results_par,
+        file = paste0("./RESULTS/", substr(gsub(pattern = " ", replacement = "_", x = current_time),1,19), ".rds"))
+cat("Results have been saved in ./RESULTS directory\n\n")

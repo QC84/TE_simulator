@@ -1,0 +1,23 @@
+------ mercredi 11 décembre ------
+
+SLIM code: BASH version available (haploïd & diploïd)
+Ariel & Apo tries to get theoretical results on diloïd case
+SLIM is interesting for recombination
+Biological question: whant are the conditions for stability ?
+	- population size (what is the threshold)
+	- Recombination rate is between 0 & 0.5
+We have also the question of desactivation
+Two time scales: first focus on trying to get that written down
+Put plots in overleaf
+Installing SLIM + reserving nodes in the cluster + GUIX recipe ?
+-> Parler à Loïc + inviter du monde dessus ?
+Do sensibility analysis around R_mig and R_kill
+
+------ jeudi 19 décembre ------
+
+Ariel did clonal diploïd case -> rise the question of what kind of reproduction
+we want to cover (selfing --auto-fertilization--)
+Large population sensitivity analysis ?
+Ariel put mathematical details in the shared overleaf
+
+------ mercredi 08 janvier ------
