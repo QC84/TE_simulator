@@ -44,9 +44,12 @@ custom_r_mig <- seq(from = params$events$r_mig - (params$events$r_mig * taux),
 custom_r_kill <- seq(from = params$events$r_kill - (params$events$r_kill * taux),
                      to   = params$events$r_kill + (params$events$r_kill * taux),
                      length.out = resolution)
+
 params_grid <- tweak(params,
                      r_mig = custom_r_mig,
                      r_kil = custom_r_kill)
+
+cat("N = ", params$init$N, "\n")
 cat("r_mig will varie from", range(custom_r_mig)[1], "to", range(custom_r_mig)[2], "\n")
 cat("r_kill will varie from", range(custom_r_kill)[1], "to", range(custom_r_kill)[2], "\n")
 cat("Total:", length(custom_r_mig), "(r_mig) x", length(custom_r_kill), "(r_kill) x", params$other$n_rep, "(replicates)\n\n") 

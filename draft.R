@@ -2,8 +2,8 @@
 
 # Sélectionner tous les réplicats avec tel r_mig et tel r_kill
 
-r_mig  <- 0.01
-r_kill <- 0.0005
+r_mig  <- 0.010068966
+r_kill <- 0.0004965517
 
 select_res <- function(res, r_mig, r_kill){
   # Guard-rail
