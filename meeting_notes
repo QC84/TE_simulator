@@ -21,3 +21,16 @@ Large population sensitivity analysis ?
 Ariel put mathematical details in the shared overleaf
 
 ------ mercredi 08 janvier ------
+Meeting reporté au mercredi 15 janvier pour cause de maladie
+
+------ jeudi 16 janvier ------
+
+A tries to find an equilibrium formulation
+Diploid case is too intensive we need to use meaningfull parameters
+Run SLiM on the cluster with Apolline
+Stop criteria when it explodes or when we attain equilibrium
+Recombination is maybe the most important/interesting phenomenon
+
+Objective : getting diploïd equilibrium
+
+------ 29 ou 30 janvier ------

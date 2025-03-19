@@ -73,4 +73,4 @@ batch_results_par <- run_batch_par(validity,
 current_time <- Sys.time()
 saveRDS(object = batch_results_par,
         file = paste0("./RESULTS/", substr(gsub(pattern = " ", replacement = "_", x = current_time),1,19), ".rds"))
-cat("Results have been saved in ./RESULTS directory\n")
+cat("Results have been saved in ~/RESULTS directory\n")

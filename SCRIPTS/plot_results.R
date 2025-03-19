@@ -1,6 +1,6 @@
 # IMPORT ------------------------------------------------------------------
 # Import simulation results
-res <- readRDS("./RESULTS/2025-03-19_09:46:45.rds")
+res <- readRDS("./RESULTS/2025-03-19_10:59:01.rds")
 
 
 # WRANGLING ---------------------------------------------------------------
@@ -50,11 +50,11 @@ summary_results <- lapply(names(results_by_params), function(param_id) {
   list(
     params = param_sets[[param_id]],
     results = data.frame(
-      min = rowMeans(all_min),
-      max = rowMeans(all_max),
-      mean = rowMeans(all_mean),
-      killed_hosts = rowMeans(all_killed),
-      total_end = rowMeans(all_total)
+      min = rowMeans(all_min, na.rm = TRUE),
+      max = rowMeans(all_max, na.rm = TRUE),
+      mean = rowMeans(all_mean, na.rm = TRUE),
+      killed_hosts = rowMeans(all_killed, na.rm = TRUE),
+      total_end = rowMeans(all_total, na.rm = TRUE)
     )
   )
 })
@@ -75,8 +75,8 @@ plot_results <- function(result) {
                     param$init$N, param$init$p0, 
                     param$events$r_mig, param$events$r_kill, 
                     param$other$n_rep),
-       xlab="Tau", ylab="Number of TEs (log_2)",
-       ylim=c(min(df$min), max(df$max)),
+       xlab="Tau", ylab="Number of TEs",
+       ylim=c(min(df$min, na.rm = TRUE),500),
        log = "y")
   
   # Add min/max as dashed lines
@@ -84,7 +84,7 @@ plot_results <- function(result) {
   lines(time, df$max, lty=2, col="red")
   
   # Add legend
-  legend("topleft", legend=c("Mean", "Min", "Max"),
+  legend("topright", legend=c("Mean", "Min", "Max"),
          col=c("black", "blue", "red"), 
          lty=c(1, 2, 2), lwd=c(2, 1, 1))
   
@@ -92,4 +92,7 @@ plot_results <- function(result) {
 }
 # Plot all results sequentially
 names(summary_results)
-plot_results(summary_results[[14]])
+for(i in seq_along(summary_results)){
+  plot_results(summary_results[[i]]) 
+}
+
