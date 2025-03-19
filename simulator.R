@@ -3,6 +3,7 @@ args <- commandArgs(trailingOnly = TRUE)
 if (length(args) != 2) {
   cat("Usage: Rscript script.R <taux> <resolution>\n")
   cat("Example: Rscript script.R 0.2 30\n")
+  cat("If you don't want to tweak the parameters, choose any <taux> and a <resolution> of 1\n")
   quit(status = 1)
 }
 
@@ -12,10 +13,10 @@ resolution <- as.numeric(args[2])
 
 # Validate inputs
 if (is.na(taux) || taux <= 0 || taux >= 1) {
-  stop("taux must be a number between 0 and 1")
+  stop("<taux> must be a number between 0 and 1")
 }
 if (is.na(resolution) || resolution <= 0) {
-  stop("resolution must be a positive number")
+  stop("<resolution> must be a positive number")
 }
 # LOCAL FUNCTIONS ---------------------------------------------------------
 cli::cli_h2("FUNCTIONS")
@@ -32,10 +33,8 @@ cat("\n")
 cli::cli_h2("PARAMETERS")
 
 ## Load -------------------------------------------------------------------
-cat("------Load------\n\n")
-source("./CONFIG/default.R")
-# Print object name & key values
-cat("Retreiving parameters from ./CONFIG/default.R\n\n")
+source("./config.R")
+# This script also prints object name & key values
 
 ## Tweak ------------------------------------------------------------------
 custom_r_mig <- seq(from = params$events$r_mig - (params$events$r_mig * taux),
@@ -49,7 +48,6 @@ params_grid <- tweak(params,
                      r_mig = custom_r_mig,
                      r_kil = custom_r_kill)
 
-cat("N = ", params$init$N, "\n")
 cat("r_mig will varie from", range(custom_r_mig)[1], "to", range(custom_r_mig)[2], "\n")
 cat("r_kill will varie from", range(custom_r_kill)[1], "to", range(custom_r_kill)[2], "\n")
 cat("Total:", length(custom_r_mig), "(r_mig) x", length(custom_r_kill), "(r_kill) x", params$other$n_rep, "(replicates)\n\n") 
