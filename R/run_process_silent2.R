@@ -1,4 +1,4 @@
-run_process_silent <- function(params, initial_hosts){
+run_process_silent2 <- function(params, initial_hosts){
   N         <- params$init$N
   r_mig     <- params$events$r_mig
   r_kill    <- params$events$r_kill
@@ -8,16 +8,14 @@ run_process_silent <- function(params, initial_hosts){
   count     <- params$breakif$count
   tau       <- params$other$tau
   seed      <- params$other$seed
-
+  
   # Preallocation of the final output container
-  # cols <- c("killed_hosts", "min", "mean", "max", "total_end") 
-  cols <- c("min") 
-  output <- matrix(data = 1997,
+  cols <- c("killed_hosts", "min", "mean", "max", "total_end")
+  output <- matrix(data = NA,
                    nrow = tau,
                    ncol = length(cols)) |> as.data.frame()
   colnames(output) <- cols
   rownames(output) <- paste0("t_", 1:tau)
-  
   # Preallocation of the transitory output container
   current <- data.frame(
     initial            = initial_hosts,
@@ -56,9 +54,9 @@ run_process_silent <- function(params, initial_hosts){
     ###### FILLING OUTPUT ######
     final <- current[,ncol(current)]
     # output[t,]$killed_hosts <- sum(is.na(current$after_death))
-    output[t,]$min          <- min(final, na.rm = TRUE)
-    # output[t,]$mean         <- mean(final) 
-    # output[t,]$max          <- max(final) 
+    output[t,]$min          <- min(final)
+    # output[t,]$mean         <- mean(final)
+    # output[t,]$max          <- max(final)
     # output[t,]$total_end    <- sum(final)
     ###### RESTART ######
     current$initial <- final

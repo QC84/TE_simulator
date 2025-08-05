@@ -1,7 +1,7 @@
 # IMPORT ------------------------------------------------------------------
 # Import simulation results
-res <- readRDS("./RESULTS/2025-03-19_10:59:01.rds")
-
+# res <- readRDS("~/REMOTE_SHARED/WIAS_transposons/RESULTS/2025-03-26_10:36:27.rds")
+res <- readRDS("~/REMOTE_SHARED/WIAS_transposons/RESULTS/cluster_2025-03-26_10:31:23.rds")
 
 # WRANGLING ---------------------------------------------------------------
 # Identify unique parameter sets
@@ -96,3 +96,11 @@ for(i in seq_along(summary_results)){
   plot_results(summary_results[[i]]) 
 }
 
+################################################################################
+# To plot only one replicate
+for(i in seq_along(res)){
+  plot_results(res[[i]])
+}
+
+# Usefull plot ?
+barplot(table(res[[]]$min), log = "y")

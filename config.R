@@ -1,6 +1,6 @@
 # Création de la liste de paramètres
 params <- list(
-  init    = list(N  = 1e3,
+  init    = list(N  = 5e3,
                  p0 = 1),
   events  = list(r_mig  = 0.01,
                  r_kill = 0.0005,
@@ -8,8 +8,8 @@ params <- list(
   breakif = list(prop_dead = 0.33,
                  max       = 500,
                  count     = 300),
-  other   = list(tau      = 5e4,
-                 n_rep    = 5,
+  other   = list(tau      = 1e4,
+                 n_rep    = 7,
                  seed     = 2025)
 )
 # Print the parameters to inform the user
